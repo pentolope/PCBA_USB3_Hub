@@ -25,6 +25,7 @@
   "derivation": {
     "method": "BRIEF.md was read and split; no design decision was taken. Every fixed_requirements entry, and every spec-table row sourced from the brief, carries a quotation that was checked by literal substring match against the brief bytes digested above. The build refuses to emit this file if any quotation is not found.",
     "quotations_verified": 30,
+    "where_the_quotations_are": "Every one of them is in this file: fixed_requirements[].brief_evidence and brief_spec_rows[].brief_evidence. The count above is the sum of those two lists, so it is recomputable from this repository alone - re-read BRIEF.md and check each string is a substring of it. brief_spec_rows carries the quotations behind the README's spec table, which would otherwise cite the brief with the evidence left in a build script.",
     "review": "two rounds of adversarial review against the brief, looking for invented requirements, lost requirements, evidence supporting a weaker claim than the one made beside it, and worksheet questions that presuppose their own answer"
   },
   "fixed_requirements": [
@@ -117,6 +118,68 @@
       "id": "REQ-18",
       "requirement": "The requirements stated in the brief are to be treated as authoritative: binding on the design rather than advisory.",
       "brief_evidence": "Treat stated requirements as authoritative; where the brief leaves choices open, make and document reasonable engineering decisions"
+    }
+  ],
+  "brief_spec_rows": [
+    {
+      "aspect": "Port topology",
+      "value": "One upstream, four downstream USB 3.x ports, SuperSpeed operation",
+      "brief_evidence": "Design a one-upstream/four-downstream USB 3.x hub supporting SuperSpeed operation."
+    },
+    {
+      "aspect": "Hub controller",
+      "value": "A commercially available hub controller with public hardware guidance; specific part not named by the brief",
+      "brief_evidence": "Use a commercially available hub controller with public hardware guidance."
+    },
+    {
+      "aspect": "Upstream connector",
+      "value": "One USB-C connector",
+      "brief_evidence": "Provide one USB-C upstream connector and four downstream connectors"
+    },
+    {
+      "aspect": "Downstream connectors",
+      "value": "Four downstream connectors; connector type/style not stated by the brief",
+      "brief_evidence": "one USB-C upstream connector and four downstream connectors, per-port power switching/current limiting"
+    },
+    {
+      "aspect": "Port power handling",
+      "value": "Per-port power switching / current limiting required",
+      "brief_evidence": "four downstream connectors, per-port power switching/current limiting, ESD protection"
+    },
+    {
+      "aspect": "ESD protection",
+      "value": "Required; device class, coverage and placement not fixed by the brief",
+      "brief_evidence": "per-port power switching/current limiting, ESD protection, configuration EEPROM/flash if required"
+    },
+    {
+      "aspect": "Configuration memory",
+      "value": "Configuration EEPROM/flash provided if the chosen controller requires it",
+      "brief_evidence": "ESD protection, configuration EEPROM/flash if required, and the controller's required reference clock."
+    },
+    {
+      "aspect": "Reference clock",
+      "value": "The controller's required reference clock must be provided; source and frequency follow the chosen controller",
+      "brief_evidence": "configuration EEPROM/flash if required, and the controller's required reference clock."
+    },
+    {
+      "aspect": "Stackup intent",
+      "value": "A stackup appropriate for controlled differential impedance",
+      "brief_evidence": "Use a stackup appropriate for controlled differential impedance."
+    },
+    {
+      "aspect": "High-speed routing rules",
+      "value": "SuperSpeed pairs short, over continuous reference planes, no unnecessary vias/stubs, per controller/connector pin escape recommendations; USB 2.0 pairs also routed correctly",
+      "brief_evidence": "SuperSpeed pairs must be short, reference continuous planes, avoid unnecessary vias/stubs, and follow the controller/connector pin escape recommendations. USB 2.0 pairs must also be routed correctly."
+    },
+    {
+      "aspect": "Placement strategy",
+      "value": "Connector-driven placement respecting high-speed lane ordering; the brief states this as a 'should', unlike the 'must' it uses for the routing rules",
+      "brief_evidence": "Placement should be connector-driven and respect high-speed lane ordering."
+    },
+    {
+      "aspect": "Requirement authority",
+      "value": "Stated requirements are authoritative; open choices are made and documented as engineering decisions, not invented as user requirements",
+      "brief_evidence": "Treat stated requirements as authoritative; where the brief leaves choices open, make and document reasonable engineering decisions rather than inventing hidden user requirements."
     }
   ],
   "open_decisions": [
